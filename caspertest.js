@@ -1,5 +1,5 @@
 var casper = require('casper').create();
-var password = casper.cli.args[0];
+var username=casper.cli.raw.get('u'), password = casper.cli.raw.get('p');
 
 casper.start('http://svw/', function() {
     this.userAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)');
@@ -9,7 +9,7 @@ casper.start('http://svw/', function() {
 
 // 登陆页面
 casper.then(function() {
-    this.sendKeys('input#username', '');
+    this.sendKeys('input#username', username);
     this.sendKeys('input#password', password);
 });
 //captureScreen('svw_index_filled.png');
@@ -36,7 +36,7 @@ casper.withPopup('http://svw.csvw.com/skqjct/skq/jsp/index.jsp', function() {
     // 截屏考勤信息
     mouseClick(63, 169);
     
-    captureScreen('svw_kaoqin_menu.png');
+    //captureScreen('svw_kaoqin_menu.png');
     mouseClick(58, 190);
     casper.withFrame(2, function() {
         this.waitForSelector('input[name="Submit"]');
